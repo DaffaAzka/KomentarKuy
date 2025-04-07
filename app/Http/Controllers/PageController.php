@@ -11,12 +11,13 @@ class PageController extends Controller
 {
 
 
-    public function dashboard(TrendingService $trendingService) {
+    public function dashboard(TrendingService $trendingService, $word = '') {
 
         $user = Auth::user();
 
-        $threads = Thread::all()->sortByDesc('created_at');
-
+        $threads = Thread::where('content', 'LIKE', "%{$word}%")
+            ->orderByDesc('created_at')
+            ->get();
 
         return view("dashboard", [
             "user"=> $user,

@@ -27,10 +27,43 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
 
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+
     }
 
     public function register(Request $request) {
+        /**
+         * Task 1: Validasi inputan register
+         * Task 2: Cek apakah email sudah digunakan atau belum
+         * Task 3: Cek apakah password dan konfirmasi password sama
+         * Task 4: Simpan data user ke database
+         * Task 6: Redirect ke halaman login
+         * Task 7: Jika gagal, tampilkan pesan error (contoh redirectnya ada di function login)
+         *
+         * Struktur request dari form:
+         * - name
+         * - username
+         * - email
+         * - password
+         * - password_confirmation
+         *
+         * Struktur database:
+         * - name
+         * - username
+         * - email
+         * - password
+         *
+         * PS: Referensi ada di function store
+         */
 
+         return redirect()->route('auth.login');
     }
 
     public function trending(TrendingService $trendingService) {
