@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/{word?}', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    // LIKE ROUTES
+    Route::post('/like', [PageController::class, 'like'])->name('like');
+
     // THREAD ROUTES
     Route::get('/thread/{id}', [ThreadController::class, 'show'])->name('thread.show');
     Route::get('/thread/{id}/edit', [ThreadController::class, 'edit'])->name('thread.edit');

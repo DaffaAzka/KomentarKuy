@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Thread;
 use App\Services\TrendingService;
 use Illuminate\Http\Request;
@@ -24,6 +26,41 @@ class PageController extends Controller
             "trendings"=> $trendingService->getTrendingWords(),
             "threads"=> $threads
         ]);
+    }
+
+    public function like(Request $request) {
+        $user = Auth::user();
+
+        if($request->input('thread_id') == null) {
+            $comment = Comment::find($request->input('comment_id'));
+
+            $like = $comment->likes()->where('user_id', $user->id)->first();
+
+            if ($like) {
+                $like->delete();
+            } else {
+                Like::create([
+                    'user_id' => $user->id,
+                    'comment_id' => $comment->id,
+                ]);
+            }
+        } else {
+            $thread = Thread::find($request->input('thread_id'));
+
+            $like = $thread->likes()->where('user_id', $user->id)->first();
+
+            if ($like) {
+                $like->delete();
+            } else {
+                Like::create([
+                    'user_id' => $user->id,
+                    'thread_id' => $thread->id,
+                ]);
+            }
+        }
+
+
+        return redirect()->back();
     }
 
 

@@ -52,11 +52,14 @@
                         </p>
 
                         <div class="flex space-x-4 mt-2">
-                            <form action="" method="POST" class="inline">
+                            <form action="{{ route('like') }}" method="POST" class="inline">
                                 @csrf
+                                <input type="hidden" name="thread_id" value="{{ $thread->id }}">
                                 <button type="submit" class="flex items-center space-x-1 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                        fill="{{ $thread->likes()->where('user_id', $user->id)->first() ? 'currentColor' : 'none' }}"
+                                        viewBox="0 0 24 24" stroke="currentColor"
+                                        class="{{ $thread->likes()->where('user_id', $user->id)->first() ? 'text-red-500' : '' }}">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                     </svg>
@@ -90,10 +93,12 @@
                                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
                                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownMenuIconButton">
                                         <li>
-                                            <a href="{{ route('thread.edit', ['id' => $thread->id]) }}" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
+                                            <a href="{{ route('thread.edit', ['id' => $thread->id]) }}"
+                                                class="block px-4 py-2 hover:bg-gray-100">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('thread.destroy', ['id' => $thread->id]) }}" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+                                            <a href="{{ route('thread.destroy', ['id' => $thread->id]) }}"
+                                                class="block px-4 py-2 hover:bg-gray-100">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -144,11 +149,14 @@
 
 
                                 <div class="flex space-x-4 mt-2">
-                                    <form action="" method="POST" class="inline">
+                                    <form action="{{ route('like') }}" method="POST" class="inline">
                                         @csrf
+                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
                                         <button type="submit" class="flex items-center space-x-1 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                fill="{{ $comment->likes()->where('user_id', $user->id)->first() ? 'currentColor' : 'none' }}"
+                                                viewBox="0 0 24 24" stroke="currentColor"
+                                                class="{{ $comment->likes()->where('user_id', $user->id)->first() ? 'text-red-500' : '' }}">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                             </svg>
