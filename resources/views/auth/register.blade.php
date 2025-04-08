@@ -7,10 +7,8 @@
                 <p class="text-gray-500 text-sm">Start your journey with us</p>
             </div>
 
-            <form class="space-y-4" method="POST" action="{{ route('register') }}">
-                @csrf
-                 @error('error')
-                    <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
+            @error('error')
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
                     role="alert">
                     <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 20 20">
@@ -22,7 +20,10 @@
                         <span class="font-medium">Something wrong!</span> {{ $message }}
                     </div>
                 </div>
-                @enderror
+            @enderror
+
+            <form class="space-y-4" method="POST" action="{{ route('register') }}">
+                @csrf
 
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-900">Name</label>

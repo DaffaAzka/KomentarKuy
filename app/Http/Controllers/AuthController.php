@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thread;
+use App\Models\User;
 use App\Services\TrendingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -39,41 +41,46 @@ class AuthController extends Controller
     }
 
     public function register(Request $request) {
-        /**
-         * Task 1: Validasi inputan register
-         * Task 2: Cek apakah email sudah digunakan atau belum
-         * Task 3: Cek apakah password dan konfirmasi password sama
-         * Task 4: Simpan data user ke database
-         * Task 6: Redirect ke halaman login
-         * Task 7: Jika gagal, tampilkan pesan error (contoh redirectnya ada di function login)
-         *
-         * Struktur request dari form:
-         * - name
-         * - username
-         * - email
-         * - password
-         * - password_confirmation
-         *
-         * Struktur database:
-         * - name
-         * - username
-         * - email
-         * - password
-         *
-         * PS: Referensi ada di function store
-         */
 
-         return redirect()->route('auth.login');
+        $validated=$request->validate([
+            'name'=> 'required|string|max:255',
+            'username'=>'required|string|max:255',
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+            'password_confirmation'=>'required|min:6',
+         ]);
+
+        if (User::where('email', $validated['email'])->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Email already exists']);
+        }
+
+        if (User::where('username', $validated['username'])->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Username already exists']);
+        }
+
+        if ($validated['password'] !== $validated['password_confirmation']) {
+            return redirect()->back()->withErrors(['error' => 'Passwords do not match']);
+        }
+
+        User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect()->route('auth.login');
+
     }
 
     public function trending(TrendingService $trendingService) {
 
-        $trendingWords = $trendingService->getTrendingWords();
+        // $trendingWords = $trendingService->getTrendingWords();
 
 
-        return response()->json([
-            'trending_words' => $trendingWords,
-        ]);
+        // return response()->json([
+        //     'trending_words' => $trendingWords,
+        // ]);
     }
 
 
