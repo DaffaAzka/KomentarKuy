@@ -78,7 +78,7 @@ class CommentController extends Controller
     public function update(Request $request, string $id)
     {
         /**
-         * Task 1: Validasi input ($request->validate)
+         * Task 1: Validasi input ($request->validate) Task 1: Validasi input ($request->validate)
          * Task 2: Temukan comment berdasarkan ID (Comment::find)
          * Task 3: Perbarui konten comment dengan input dari form ($request->content)
          * Task 4: Simpan perubahan ke database

@@ -11,7 +11,7 @@ class TrendingService {
     public function getTrendingWords(int $limit = 5) {
         return Cache::remember('trending-words', now()->addHours(6), function () use ($limit) {
 
-            $threads = Thread::latest()->take(100)->get('content');
+            $threads = Thread::latest()->take(value: 100)->get('content');
             $wordCounts = [];
 
             foreach ($threads as $thread) {

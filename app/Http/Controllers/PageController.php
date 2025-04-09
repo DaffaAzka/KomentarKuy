@@ -28,6 +28,22 @@ class PageController extends Controller
         ]);
     }
 
+    public function creators() {
+        $user = Auth::user();
+        return view('creators', [
+            'user'=> $user
+        ]);
+    }
+
+    public function trending(TrendingService $trendingService) {
+        $user = Auth::user();
+
+        return view('trending', [
+            "user"=> $user,
+            "trendings"=> $trendingService->getTrendingWords(),
+        ]);
+    }
+
     public function like(Request $request) {
         $user = Auth::user();
 

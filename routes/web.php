@@ -28,6 +28,8 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard/{word?}', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/trending', [PageController::class,'trending'])->name('trending');
+    Route::get('/creators', [PageController::class,'creators'])->name('creators');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // LIKE ROUTES
