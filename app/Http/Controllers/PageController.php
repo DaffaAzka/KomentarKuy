@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Thread;
+use App\Models\User;
 use App\Services\TrendingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,27 @@ class PageController extends Controller
         ]);
     }
 
+    public function profile($username = '') {
+        $user = Auth::user();
+
+        if ($username == '') {
+            $profile = $user;
+        } else {
+            $profile = User::where('username', $username)->first();
+        }
+
+
+        // $threads = Thread::where("user_id", "LIKE", "%{$user->id}%")
+        //     ->orderByDesc('created_at')
+        //     ->get();
+
+            // dd($profile);
+
+        return view('profile', [
+            'user'=> $user,
+            'profile'=> $profile
+        ]);
+    }
     public function creators() {
         $user = Auth::user();
         return view('creators', [

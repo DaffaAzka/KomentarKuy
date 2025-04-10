@@ -70,9 +70,12 @@
                             <img class="w-8 h-8 rounded-full object-cover"
                                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                             <div class="space-y-1">
-                                <h3 class="font-semibold">{{ $thread->user->name }} <span
-                                        class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
-                                </h3>
+                                <a href="{{ route('profile', ['username' => $thread->user->username]) }}">
+                                    <h3 class="font-semibold">{{ $thread->user->name }} <span
+                                            class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
+                                    </h3>
+                                </a>
+
                                 <p class="font-normal text-gray-700">{{ $thread->content }}</p>
                                 <p class="text-sm font-normal text-gray-400">{{ $thread->created_at->diffForHumans() }}
                                 </p>
@@ -93,7 +96,8 @@
                                         </button>
                                     </form>
 
-                                    <a href="{{ route('thread.show', ['id' => $thread->id]) }}" class="flex items-center space-x-1 focus:outline-none">
+                                    <a href="{{ route('thread.show', ['id' => $thread->id]) }}"
+                                        class="flex items-center space-x-1 focus:outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
