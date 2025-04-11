@@ -11,6 +11,10 @@
             {{ $user->email }}
         </x-slot:email>
 
+        <x-slot:profile_picture>
+            {{ $user->profile_picture }}
+        </x-slot:profile_picture>
+
         <div class="grid grid-cols-1 md:grid-cols-2">
 
             <div class="space-y-4">
@@ -44,9 +48,9 @@
                     <img class="w-8 h-8 rounded-full"
                         src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                     <div class="space-y-1">
-                        <h3 class="font-semibold">{{ $thread->user->name }} <span
+                        <a href="{{ route('profile', ['username' => $thread->user->username]) }}" class="font-semibold">{{ $thread->user->name }} <span
                                 class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
-                        </h3>
+                        </a>
                         <p class="font-normal text-gray-700">{{ $thread->content }}</p>
                         <p class="text-sm font-normal text-gray-400">{{ $thread->created_at->diffForHumans() }}
                         </p>

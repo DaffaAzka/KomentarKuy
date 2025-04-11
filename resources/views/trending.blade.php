@@ -11,6 +11,10 @@
             {{ $user->email }}
         </x-slot:email>
 
+        <x-slot:profile_picture>
+            {{ $user->profile_picture }}
+        </x-slot:profile_picture>
+
         <div class="">
 
             <div class="px-4 space-y-4">

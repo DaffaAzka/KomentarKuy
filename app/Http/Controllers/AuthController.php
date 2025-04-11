@@ -8,6 +8,7 @@ use App\Services\TrendingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -81,6 +82,54 @@ class AuthController extends Controller
         // return response()->json([
         //     'trending_words' => $trendingWords,
         // ]);
+    }
+
+    public function editProfile(Request $request) {
+
+
+        $user = Auth::user();
+        $image = null;
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+        ]);
+
+
+        if (User::where('username', $request->username)->exists() && $user->username != $request->username) {
+            return redirect()->back()->withErrors(['error'=> "Username already exists"]);
+        }
+
+        // $temp = User::find($user->id);
+
+        if ($request->image) {
+            $fileName = $this->generateRandomString();
+            $extension = $request->image->extension();
+            $image = $fileName . '.' . $extension;
+            Storage::disk('public')->putFileAs('images', $request->image, $image);
+        }
+
+        User::where('id', $user->id)->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'profile_picture' => $image,
+        ]);
+
+        return redirect()->back()->with('success', 'Profile updated successfully');
+
+    }
+
+    function generateRandomString($length = 30): string
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 
 

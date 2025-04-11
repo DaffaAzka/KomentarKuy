@@ -33,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/{username?}', [PageController::class,'profile'])->name('profile');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    // USERS ROUTES
+    Route::post('/edit-profile', [AuthController::class, 'editProfile'])->name('profile.update');
+
     // LIKE ROUTES
     Route::post('/like', [PageController::class, 'like'])->name('like');
 

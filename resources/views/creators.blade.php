@@ -11,6 +11,10 @@
             {{ $user->email }}
         </x-slot:email>
 
+        <x-slot:profile_picture>
+            {{ $user->profile_picture }}
+        </x-slot:profile_picture>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             @for ($i = 0; $i < 6; $i++)

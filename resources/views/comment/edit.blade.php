@@ -11,6 +11,10 @@
             {{ $user->email }}
         </x-slot:email>
 
+        <x-slot:profile_picture>
+            {{ $user->profile_picture }}
+        </x-slot:profile_picture>
+
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
@@ -84,7 +88,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('comment.store') }}" method="post"
+                <form action="{{ route('comment.edit', ['id' => $comment->id]) }}" method="post"
                     class="flex items-center mx-auto px-2 border-b border-gray-200 pb-4">
                     @csrf
                     <img class="w-8 h-8 rounded-full mr-2 hidden md:block"

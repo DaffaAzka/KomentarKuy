@@ -38,13 +38,6 @@ class PageController extends Controller
             $profile = User::where('username', $username)->first();
         }
 
-
-        // $threads = Thread::where("user_id", "LIKE", "%{$user->id}%")
-        //     ->orderByDesc('created_at')
-        //     ->get();
-
-            // dd($profile);
-
         return view('profile', [
             'user'=> $user,
             'profile'=> $profile

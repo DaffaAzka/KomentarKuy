@@ -11,6 +11,10 @@
             {{ $user->email }}
         </x-slot:email>
 
+        <x-slot:profile_picture>
+            {{ $user->profile_picture }}
+        </x-slot:profile_picture>
+
         <div class="grid grid-cols-1 md:grid-cols-2">
 
             <div class="space-y-4">
@@ -19,7 +23,7 @@
                     <h3 class="text-2xl font-semibold">Edit Thread</h3>
 
                     {{-- Form untuk mengedit Thread --}}
-                    <form action="{{ route('thread.store') }}" method="post"
+                    <form action="{{ route('thread.edit') }}" method="post"
                         class="flex items-center mx-auto px-2 pt-2 pb-4 border-b border-gray-200">
                         @csrf
                         <img class="w-8 h-8 rounded-full mr-2 hidden md:block"
