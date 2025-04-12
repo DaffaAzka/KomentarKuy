@@ -76,52 +76,64 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        /**
-         * Task 1: Validasi input ($request->validate) Task 1: Validasi input ($request->validate)
-         * Task 2: Temukan comment berdasarkan ID (Comment::find)
-         * Task 3: Perbarui konten comment dengan input dari form ($request->content)
-         * Task 4: Simpan perubahan ke database
-         * Task 5: Ubah if di line 95 menjadi if(jika data berhasil disimpan)
-         * Task 8: Redirect ke halaman thread dengan ID yang sesuai ($comment->thread_id)
-         *
-         * Struktur database:
-         * - id (tidak perlu untuk update dan delete)
-         * - user_id (tidak perlu untuk update dan delete)
-         * - thread_id (tidak perlu untuk update dan delete)
-         * - content
-         *
-         * PS: Referensi ada di function store
-        */
+{
+    // Task 1: Validasi input
+    $request->validate([
+        'content' => 'required|string|max:255',
+    ]);
 
-        if(true) {
-            return redirect()->route('thread.show', ['id' => 0])->with('success', 'Comment edited successfully.');
-        }
+    // Task 2: Temukan comment berdasarkan ID
+    $comment = Comment::find($id);
 
+    // Jika comment tidak ditemukan
+    if (!$comment) {
+        return redirect()->back()->with('error', 'Comment not found.');
     }
+
+    // Task 3: Perbarui konten comment
+    $comment->content = $request->input('content');
+
+    // Task 4: Simpan perubahan ke database
+    $saved = $comment->save();
+
+    // Task 5 & 8: Jika berhasil, redirect ke halaman thread asal
+    if ($saved) {
+        return redirect()->route('thread.show', ['id' => $comment->thread_id])
+                         ->with('success', 'Comment edited successfully.');
+    }
+
+    // Jika gagal menyimpan
+    return redirect()->route('thread.show', ['id' => $comment->thread_id])
+                     ->with('error', 'Failed to update comment.');
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        /**
-         * Task 1: Temukan comment berdasarkan ID (Comment::find)
-         * Task 2: Hapus comment dari database
-         * Task 3: Ubah if di line 121 menjadi if(jika data berhasil dihapus)
-         * Task 4: Redirect ke halaman thread dengan ID yang sesuai (hint -> simpan ID Thread sebelum comment dihapus)
-         *
-         * Struktur database:
-         * - id (tidak perlu untuk update dan delete)
-         * - user_id (tidak perlu untuk update dan delete)
-         * - thread_id (tidak perlu untuk update dan delete)
-         * - content (tidak perlu untuk delete)
-         *
-         * PS: Referensi ada di function store
-        */
+{
+    // Task 1: Temukan comment berdasarkan ID
+    $comment = Comment::find($id);
 
-        if(true) {
-            return redirect()->route('thread.show', ['id' => 0])->with('success', 'Comment deleted successfully.');
-        }
+    // Jika comment tidak ditemukan, redirect balik
+    if (!$comment) {
+        return redirect()->back()->with('error', 'Comment not found.');
     }
+
+    // Task 4: Simpan ID thread sebelum comment dihapus
+    $threadId = $comment->thread_id;
+
+    // Task 2: Hapus comment dari database
+    $deleted = $comment->delete();
+
+    // Task 3: Cek jika berhasil dihapus
+    if ($deleted) {
+        return redirect()->route('thread.show', ['id' => $threadId])
+                         ->with('success', 'Comment deleted successfully.');
+    }
+
+    // Jika gagal menghapus
+    return redirect()->route('thread.show', ['id' => $threadId])
+                     ->with('error', 'Failed to delete comment.');
+}
 }

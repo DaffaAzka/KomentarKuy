@@ -90,24 +90,30 @@ class ThreadController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        /**
-         * Task 1: Validasi input ($request->validate)
-         * Task 2: Temukan thread berdasarkan ID (Thread::find)
-         * Task 3: Perbarui konten thread dengan input dari form ($request->content)
-         * Task 4: Simpan perubahan ke database
-         * Task 5: Ubah if di line 108 menjadi if(jika data berhasil disimpan)
-         *
-         * Struktur database:
-         * - id (tidak perlu untuk update dan delete)
-         * - user_id (tidak perlu untuk update dan delete)
-         * - content
-         *
-         * PS: Referensi ada di function store
-        */
+       // Validasi input untuk memastikan 'content' sesuai aturan
+    $request->validate([
+        'content' => 'required|string|max:255',
+    ]);
 
-        if(true) {
-            return redirect()->route('dashboard')->with('success', 'Thread edited successfully.');
-        }
+    // Cari thread berdasarkan ID
+    $thread = Thread::find($id);
+
+    // Jika thread tidak ditemukan, kembalikan pesan error
+    if (!$thread) {
+        return redirect()->route('dashboard')->with('error', 'Thread not found.');
+    }
+
+    // Perbarui konten thread
+    $thread->content = $request->input('content');
+
+    // Simpan perubahan ke database
+    if ($thread->save()) {
+        // Jika berhasil, tampilkan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Thread updated successfully.');
+    }
+
+    // Jika gagal, tampilkan pesan error
+    return redirect()->route('dashboard')->with('error', 'Failed to update thread.');
     }
 
     /**
@@ -115,21 +121,21 @@ class ThreadController extends Controller
      */
     public function destroy(string $id)
     {
-        /**
-         * Task 1: Temukan thread berdasarkan ID (Thread::find)
-         * Task 2: Hapus thread dari database
-         * Task 3: Ubah if di line 131 menjadi if(jika data berhasil dihapus)
-         *
-         * Struktur database:
-         * - id (tidak perlu untuk update dan delete)
-         * - user_id (tidak perlu untuk update dan delete)
-         * - content (tidak perlu untuk delete)
-         *
-         * PS: Referensi ada di function store
-        */
+     // Cari thread berdasarkan ID
+    $thread = Thread::find($id);
 
-        if(true) {
-            return redirect()->route('dashboard')->with('success', 'Thread deleted successfully.');
-        }
+    // Jika thread tidak ditemukan, kembalikan pesan error
+    if (!$thread) {
+        return redirect()->route('dashboard')->with('error', 'Thread not found.');
+    }
+
+    // Hapus thread dari database
+    if ($thread->delete()) {
+        // Jika berhasil, tampilkan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Thread deleted successfully.');
+    }
+
+    // Jika gagal, tampilkan pesan error
+    return redirect()->route('dashboard')->with('error', 'Failed to delete thread.');
     }
 }
