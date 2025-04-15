@@ -45,8 +45,8 @@
                 @endif
 
                 <div class="flex space-x-3 border-b pb-4 border-gray-200 mt-4">
-                    <img class="w-8 h-8 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                    <img class="w-8 h-8 rounded-full object-cover"
+                            src="{{ asset('storage/images/' . $thread->user->profile_picture )}}" alt="user photo">
                     <div class="space-y-1">
                         <a href="{{ route('profile', ['username' => $thread->user->username]) }}" class="font-semibold">{{ $thread->user->name }} <span
                                 class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
@@ -117,8 +117,8 @@
                 <form action="{{ route('comment.store') }}" method="post"
                     class="flex items-center mx-auto px-2 border-b border-gray-200 pb-4">
                     @csrf
-                    <img class="w-8 h-8 rounded-full mr-2 hidden md:block"
-                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                    <img class="w-8 h-8 rounded-full object-cover me-1.5"
+                            src="{{ asset('storage/images/' . $user->profile_picture )}}" alt="user photo">
 
                     <input type="hidden" name="thread_id" value="{{ $thread->id }}">
 
@@ -140,11 +140,11 @@
                 @foreach ($thread->comments as $comment)
                     <a href="">
                         <div class="flex space-x-2 border-b p-4 border-gray-200 hover:bg-gray-50 transition">
-                            <img class="w-8 h-8 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                           <img class="w-8 h-8 rounded-full object-cover"
+                            src="{{ asset('storage/images/' . $comment->user->profile_picture )}}" alt="user photo">
                             <div class="space-y-1">
                                 <h3 class="font-semibold">{{ $comment->user->name }} <span
-                                        class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
+                                        class="text-sm font-normal text-gray-400">{{ '@' . $comment->user->username }}</span>
                                 </h3>
                                 <p class="font-normal text-gray-700">{{ $comment->content }}</p>
                                 <p class="text-sm font-normal text-gray-400">
