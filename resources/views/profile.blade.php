@@ -63,7 +63,7 @@
                     <a href="{{ route('thread.show', ['id' => $thread->id]) }}">
                         <div class="flex space-x-2 border-b p-4 border-gray-200 hover:bg-gray-50 transition w-full">
                             <img class="w-8 h-8 rounded-full object-cover"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                            src="{{ asset('storage/images/' . $profile->profile_picture )}}" alt="user photo">
                             <div class="space-y-1">
                                 <h3 class="font-semibold">{{ $thread->user->name }} <span
                                         class="text-sm font-normal text-gray-400">{{ '@' . $thread->user->username }}</span>
