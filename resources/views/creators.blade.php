@@ -37,7 +37,7 @@
                     {{-- <img src="{{ asset('storage/amba.jpeg') }}" alt="" class="rounded-full object-cover shadow"> --}}
 
                     <div class="">
-                        <h1 class="text-center text-2xl font-medium">DRahmadina Safitri</h1>
+                        <h1 class="text-center text-2xl font-medium">Rahmadina Safitri</h1>
                         <h3 class="text-center text-xl font-normal text-gray-300">Front Developer</h3>
 
                     </div>
