@@ -19,7 +19,7 @@ class ThreadFactory extends Factory
         return [
 
             "user_id" => \App\Models\User::factory(),
-            "content" => $this->faker->text(200),
+            "content" => $this->faker->text(200) . 'Kang Dedy Mulyadi',
 
         ];
     }
